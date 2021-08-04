@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 class CharacteristicScale:
     def __init__(self, taus=None, horizon=200):
         if taus is None:
-            taus = list(range(1, 50))
+            taus = list(range(1, 100))
         self.memory = []
         self.taus = taus
         self.horizon = horizon
@@ -34,8 +34,13 @@ class CharacteristicScale:
     def find_charecteristic_scale(self, avar):
         if len(avar) < 2:
             return 1
-        indx = list(avar).index(min(avar))
-        return self.taus[indx]
+        
+#         indx = list(avar).index(min(avar))
+        for i in range(len(avar)):
+            if avar[i+1] > avar[i]:
+                return self.taus[i]
+        return self.taus[-1]
+#         return self.taus[indx]
 
 
 
