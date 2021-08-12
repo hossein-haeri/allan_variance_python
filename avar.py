@@ -2,15 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class CharacteristicScale:
-    def __init__(self, taus=None, horizon=200):
+    def __init__(self, taus=None, horizon=None):
+        if horizon is None:
+            horizon = 200
         if taus is None:
-            taus = list(range(1, 100))
+            taus = range(1,int(horizon/2))
         self.memory = []
         self.taus = taus
         self.horizon = horizon
+        
 
-    def allanvar(self, y, taus):
-        avar = []
+    def allanvar(self, y, taus=None):
+        if taus is None:
+            taus = list(range(1, int(len(y)/4)))
+        av = []
         for m in taus:
             x = [0]
             for k in range(len(y)):
@@ -21,8 +26,9 @@ class CharacteristicScale:
             for k in range(n - 2 * m):
                 cumsum += (x[k + 2 * m] - 2 * x[k + m] + x[k]) ** 2
                 cnt += 1
-            avar.append(cumsum / (2 * (m ** 2) * (n - 2 * m)))
-        return avar
+            av.append(cumsum / (2 * (m ** 2) * (n - 2 * m)))
+            
+        return av
 
     def dynallanvar(self):
         if len(self.memory) >= self.horizon:
@@ -34,9 +40,10 @@ class CharacteristicScale:
     def find_charecteristic_scale(self, avar):
         if len(avar) < 2:
             return 1
-        
 #         indx = list(avar).index(min(avar))
         for i in range(len(avar)):
+            if i+1 == len(avar):
+                return self.taus[i]
             if avar[i+1] > avar[i]:
                 return self.taus[i]
         return self.taus[-1]
