@@ -47,7 +47,7 @@ class CharacteristicScale:
 #             if avar[i+1] > avar[i]:
 #                 return self.taus[i]
 #         return self.taus[-1]
-        return self.taus[indx]
+        return self.taus[indx], avar[indx]
 
 
 
