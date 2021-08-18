@@ -49,7 +49,16 @@ class CharacteristicScale:
 #         return self.taus[-1]
         return self.taus[indx], avar[indx]
 
-
+    def movmean(signal, m):
+        cumsum, moving_aves = [0], []
+        for i, x in enumerate(signal, 1):
+            cumsum.append(cumsum[i-1] + x)
+            if i>=m:
+                moving_ave = (cumsum[i] - cumsum[i-m])/m
+            else:
+                moving_ave = cumsum[i]/i      
+            moving_aves.append(moving_ave)
+        
 
 if __name__ == '__main__':
     char_scale = CharacteristicScale()
