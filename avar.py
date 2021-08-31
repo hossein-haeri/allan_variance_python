@@ -39,7 +39,7 @@ class CharacteristicScale:
 
     def find_charecteristic_scale(self, avar):
         if len(avar) < 2:
-            return 1
+            return 1, 0
         indx = list(avar).index(min(avar))
 #         for i in range(len(avar)):
 #             if i+1 == len(avar):
@@ -47,6 +47,8 @@ class CharacteristicScale:
 #             if avar[i+1] > avar[i]:
 #                 return self.taus[i]
 #         return self.taus[-1]
+#         print(self.taus[indx])
+#         print(avar[indx])
         return self.taus[indx], avar[indx]
 
     def movmean(signal, m):
